@@ -1,7 +1,7 @@
 
 # Xue-Yi-An
 
-ProjectName and Description
+此项目是CUIT2019级软件工程学院工程实践4项目成果。
 
 <!-- PROJECT SHIELDS -->
 
@@ -19,24 +19,16 @@ ProjectName and Description
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">"Xue-Yi-An人事管理系统"README</h3>
+  <h3 align="center">"Xue-Yi-An人事管理系统"</h3>
   <p align="center">
-    一个"完美的"README模板去快速开始你的项目！
+    一款完美的人事管理系统！
     <br />
     <a href="https://github.com/Wr1sw/Xue-Yi-An"><strong>探索本项目的文档 »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/Wr1sw/Xue-Yi-An">查看Demo</a>
-    ·
-    <a href="https://github.com/Wr1sw/Xue-Yi-An/issues">报告Bug</a>
-    ·
-    <a href="https://github.com/Wr1sw/Xue-Yi-An/issues">提出新特性</a>
   </p>
 
 </p>
 
-
- 本篇README.md面向开发者
  
 ## 目录
 
@@ -55,14 +47,9 @@ ProjectName and Description
 
 ### 上手指南
 
-请将所有链接中的“Wr1sw/Xue-Yi-An”改为“your_github_name/your_repository”
-
-
-
 ###### 开发前的配置要求
 
-1. IDEA
-2. xxxxx x.x.x
+IDEA + SpringBoot + SpringSecurity + MySQL57 + Redis + RabbitMQ + 
 
 ###### **安装步骤**
 
