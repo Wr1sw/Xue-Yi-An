@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.cuit.xueyian.dao.EmployeeremoveMapper" >
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.Employeeremove" >
+  <id column="id" property="id" jdbcType="INTEGER" />
+  <result column="eid" property="eid" jdbcType="INTEGER" />
+  <result column="afterDepId" property="afterdepid" jdbcType="INTEGER" />
+  <result column="afterJobId" property="afterjobid" jdbcType="INTEGER" />
+  <result column="afterPosId" property="afterposid" jdbcType="INTEGER" />
+  <result column="beforePosId" property="beforeposid" jdbcType="INTEGER" />
+  <result column="beforeDepId" property="beforedepid" jdbcType="INTEGER" />
+  <result column="beforeJobId" property="beforejobid" jdbcType="INTEGER" />
+  <result column="removeDate" property="removedate" jdbcType="DATE" />
+  <result column="reason" property="reason" jdbcType="VARCHAR" />
+  <result column="remark" property="remark" jdbcType="VARCHAR" />
+</resultMap>
+
+  <resultMap id="resultMapWithName" type="org.cuit.xueyian.model.Employeeremove" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="eid" property="eid" jdbcType="INTEGER" />
+    <result column="afterDepId" property="afterdepid" jdbcType="INTEGER" />
+    <result column="afterJobId" property="afterjobid" jdbcType="INTEGER" />
+    <result column="afterPosId" property="afterposid" jdbcType="INTEGER" />
+    <result column="beforePosId" property="beforeposid" jdbcType="INTEGER" />
+    <result column="beforeDepId" property="beforedepid" jdbcType="INTEGER" />
+    <result column="beforeJobId" property="beforejobid" jdbcType="INTEGER" />
+    <result column="removeDate" property="removedate" jdbcType="DATE" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, eid, afterDepId, afterJobId, removeDate, reason, remark,afterPosId,beforePosId,beforeDepId,beforeJobId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from employeeremove
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from employeeremove
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.Employeeremove" >
+    insert into employeeremove (id, eid, afterDepId, 
+      afterJobId, removeDate, reason, 
+      remark,afterposid,beforeposid,beforedepid,beforejobid)
+
+    values (#{id,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{afterdepid,jdbcType=INTEGER}, 
+      #{afterjobid,jdbcType=INTEGER}, #{removedate,jdbcType=DATE}, #{reason,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR},#{afterposid},#{beforeposid},
+            #{beforedepid},#{beforejobid})
+  </insert>
+
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.Employeeremove" >
+    insert into employeeremove
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="afterdepid != null" >
+        afterDepId,
+      </if>
+      <if test="afterjobid != null" >
+        afterJobId,
+      </if>
+      <if test="removedate != null" >
+        removeDate,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="afterposid != null" >
+        afterposid,
+      </if>
+      <if test="beforeposid != null" >
+        beforeposid,
+      </if>
+      <if test="beforedepid != null" >
+        beforedepid,
+      </if>
+      <if test="beforejobid != null" >
+        beforejobid,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="afterdepid != null" >
+        #{afterdepid,jdbcType=INTEGER},
+      </if>
+      <if test="afterjobid != null" >
+        #{afterjobid,jdbcType=INTEGER},
+      </if>
+      <if test="removedate != null" >
+        #{removedate,jdbcType=DATE},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="afterposid != null" >
+        #{afterposid},
+      </if>
+      <if test="beforeposid != null" >
+        #{beforeposid},
+      </if>
+      <if test="beforedepid != null" >
+        #{beforedepid},
+      </if>
+      <if test="beforejobid != null" >
+        #{beforejobid},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.Employeeremove" >
+    update employeeremove
+    <set >
+      <if test="eid != null" >
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="afterdepid != null" >
+        afterDepId = #{afterdepid,jdbcType=INTEGER},
+      </if>
+      <if test="afterjobid != null" >
+        afterJobId = #{afterjobid,jdbcType=INTEGER},
+      </if>
+      <if test="removedate != null" >
+        removeDate = #{removedate,jdbcType=DATE},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="afterposid != null" >
+        afterposid = #{afterposid},
+      </if>
+      <if test="beforeposid != null" >
+        beforeposid = #{beforeposid},
+      </if>
+      <if test="beforedepid != null" >
+        beforedepid = #{beforedepid},
+      </if>
+      <if test="beforejobid != null" >
+        beforejobid = #{beforejobid},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.Employeeremove" >
+    update employeeremove
+    set eid = #{eid,jdbcType=INTEGER},
+      afterDepId = #{afterdepid,jdbcType=INTEGER},
+      afterJobId = #{afterjobid,jdbcType=INTEGER},
+      removeDate = #{removedate,jdbcType=DATE},
+      reason = #{reason,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getEmployeeListByPage" resultMap="resultMapWithName" parameterType="map">
+    SELECT
+      emprm.*,
+      emp.name
+    FROM
+      `employeeremove` AS emprm
+        LEFT JOIN  `employee` AS emp ON emp.id = emprm.eid
+    ORDER BY
+      emprm.id
+    limit #{offsetData},#{PageSize}
+  </select>
+
+  <select id="getTotal" resultType="java.lang.Long">
+    SELECT
+     count(*)
+    FROM
+      `employeeremove` AS emprm
+        LEFT JOIN  `employee` AS emp ON emp.id = emprm.eid
+  </select>
+<select id="getEmpRmById" resultMap="resultMapWithName" parameterType="java.lang.Integer">
+  select
+    emprm.*,
+    emp.name
+  FROM
+    `employeeremove` AS emprm
+      LEFT JOIN  `employee` AS emp ON emp.id = emprm.eid
+  where emprm.id = #{id,jdbcType=INTEGER}
+</select>
+
+  <select id="queryInfo" resultMap="resultMapWithName">
+    select
+      emprm.*,
+      emp.name
+    FROM
+      `employeeremove` AS emprm
+        LEFT JOIN  `employee` AS emp ON emp.id = emprm.eid
+    <where>
+      <if test="name != null and name !='' ">
+        and emp.name like  concat('%',#{name},'%')
+      </if>
+      <if test="afterPosId != null and afterPosId !='' ">
+        and emprm.afterPosId = #{afterPosId,jdbcType=CHAR}
+      </if>
+      <if test="afterDepId != null and afterDepId !='' ">
+        and emprm.afterDepId = #{afterDepId,jdbcType=INTEGER}
+      </if>
+      <if test="afterJobId != null and afterJobId !='' ">
+        and emprm.afterJobId = #{afterDepId,jdbcType=INTEGER}
+      </if>
+    </where>
+      ORDER BY
+      emprm.id
+    limit #{offsetData},#{PageSize}
+  </select>
+
+  <select id="queryInfoLength" resultType="java.lang.Long">
+    select
+   count(*)
+    FROM
+    `employeeremove` AS emprm
+    LEFT JOIN  `employee` AS emp ON emp.id = emprm.eid
+    <where>
+      <if test="eid != null and eid !='' ">
+        and emprm.eid =#{eid}
+      </if>
+      <if test="afterPosId != null and afterPosId !='' ">
+        and emprm.afterPosId = #{afterPosId,jdbcType=CHAR}
+      </if>
+      <if test="afterDepId != null and afterDepId !='' ">
+        and emprm.afterDepId = #{afterDepId,jdbcType=INTEGER}
+      </if>
+      <if test="afterJobId != null and afterJobId !='' ">
+        and emprm.afterJobId = #{afterDepId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+</mapper>

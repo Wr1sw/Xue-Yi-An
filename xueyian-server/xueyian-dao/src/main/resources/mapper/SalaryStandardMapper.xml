@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.SalaryStandardMapper">
+    <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.SalaryStandard">
+        <id column="ssd_id" jdbcType="INTEGER" property="ssdId"/>
+        <result column="standard_id" jdbcType="VARCHAR" property="standardId"/>
+        <result column="standard_name" jdbcType="VARCHAR" property="standardName"/>
+        <result column="designer" jdbcType="VARCHAR" property="designer"/>
+        <result column="register" jdbcType="VARCHAR" property="register"/>
+        <result column="checker" jdbcType="VARCHAR" property="checker"/>
+        <result column="changer" jdbcType="VARCHAR" property="changer"/>
+        <result column="regist_time" jdbcType="TIMESTAMP" property="registTime"/>
+        <result column="check_time" jdbcType="TIMESTAMP" property="checkTime"/>
+        <result column="change_time" jdbcType="TIMESTAMP" property="changeTime"/>
+        <result column="salary_sum" jdbcType="VARCHAR" property="salarySum"/>
+        <result column="check_status" jdbcType="VARCHAR" property="checkStatus"/>
+        <result column="change_status" jdbcType="VARCHAR" property="changeStatus"/>
+        <result column="check_comment" jdbcType="VARCHAR" property="checkComment"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ssd_id, standard_id, standard_name, designer, register, checker, changer, regist_time, 
+    check_time, change_time, salary_sum, check_status, change_status, check_comment, 
+    remark
+  </sql>
+    <select id="getAllSalaryStanders" resultMap="BaseResultMap">
+    select * from salary_standard where check_status = "1"
+  </select>
+    <select id="getAllSalaryStanderNoApprove" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        salary_standard
+        where
+        check_status = "0"
+
+    </select>
+    <delete id="deleteByStdId" parameterType="java.lang.Integer">
+    delete from  salary_standard where salary_standard.standard_id = (select sd.standard_id from salary_standard_details sd where sd.sdt_id = #{id})
+  </delete>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from salary_standard
+        where ssd_id = #{ssdId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from salary_standard
+    where ssd_id = #{ssdId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="org.cuit.xueyian.model.SalaryStandard">
+    insert into salary_standard (ssd_id, standard_id, standard_name, 
+      designer, register, checker, 
+      changer, regist_time, check_time, 
+      change_time, salary_sum, check_status, 
+      change_status, check_comment, remark
+      )
+    values (#{ssdId,jdbcType=INTEGER}, #{standardId,jdbcType=VARCHAR}, #{standardName,jdbcType=VARCHAR}, 
+      #{designer,jdbcType=VARCHAR}, #{register,jdbcType=VARCHAR}, #{checker,jdbcType=VARCHAR}, 
+      #{changer,jdbcType=VARCHAR}, #{registTime,jdbcType=TIMESTAMP}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{changeTime,jdbcType=TIMESTAMP}, #{salarySum,jdbcType=VARCHAR}, #{checkStatus,jdbcType=VARCHAR}, 
+      #{changeStatus,jdbcType=VARCHAR}, #{checkComment,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="org.cuit.xueyian.model.SalaryStandard">
+        insert into salary_standard
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ssdId != null">
+                ssd_id,
+            </if>
+            <if test="standardId != null">
+                standard_id,
+            </if>
+            <if test="standardName != null">
+                standard_name,
+            </if>
+            <if test="designer != null">
+                designer,
+            </if>
+            <if test="register != null">
+                register,
+            </if>
+            <if test="checker != null">
+                checker,
+            </if>
+            <if test="changer != null">
+                changer,
+            </if>
+            <if test="registTime != null">
+                regist_time,
+            </if>
+            <if test="checkTime != null">
+                check_time,
+            </if>
+            <if test="changeTime != null">
+                change_time,
+            </if>
+            <if test="salarySum != null">
+                salary_sum,
+            </if>
+            <if test="checkStatus != null">
+                check_status,
+            </if>
+            <if test="changeStatus != null">
+                change_status,
+            </if>
+            <if test="checkComment != null">
+                check_comment,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ssdId != null">
+                #{ssdId,jdbcType=INTEGER},
+            </if>
+            <if test="standardId != null">
+                #{standardId,jdbcType=VARCHAR},
+            </if>
+            <if test="standardName != null">
+                #{standardName,jdbcType=VARCHAR},
+            </if>
+            <if test="designer != null">
+                #{designer,jdbcType=VARCHAR},
+            </if>
+            <if test="register != null">
+                #{register,jdbcType=VARCHAR},
+            </if>
+            <if test="checker != null">
+                #{checker,jdbcType=VARCHAR},
+            </if>
+            <if test="changer != null">
+                #{changer,jdbcType=VARCHAR},
+            </if>
+            <if test="registTime != null">
+                #{registTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkTime != null">
+                #{checkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="changeTime != null">
+                #{changeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="salarySum != null">
+                #{salarySum,jdbcType=VARCHAR},
+            </if>
+            <if test="checkStatus != null">
+                #{checkStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="changeStatus != null">
+                #{changeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="checkComment != null">
+                #{checkComment,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.SalaryStandard">
+        update salary_standard
+        <set>
+            <if test="standardId != null">
+                standard_id = #{standardId,jdbcType=VARCHAR},
+            </if>
+            <if test="standardName != null">
+                standard_name = #{standardName,jdbcType=VARCHAR},
+            </if>
+            <if test="designer != null">
+                designer = #{designer,jdbcType=VARCHAR},
+            </if>
+            <if test="register != null">
+                register = #{register,jdbcType=VARCHAR},
+            </if>
+            <if test="checker != null">
+                checker = #{checker,jdbcType=VARCHAR},
+            </if>
+            <if test="changer != null">
+                changer = #{changer,jdbcType=VARCHAR},
+            </if>
+            <if test="registTime != null">
+                regist_time = #{registTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkTime != null">
+                check_time = #{checkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="changeTime != null">
+                change_time = #{changeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="salarySum != null">
+                salary_sum = #{salarySum,jdbcType=VARCHAR},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="changeStatus != null">
+                change_status = #{changeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="checkComment != null">
+                check_comment = #{checkComment,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ssd_id = #{ssdId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.SalaryStandard">
+    update salary_standard
+    set standard_id = #{standardId,jdbcType=VARCHAR},
+      standard_name = #{standardName,jdbcType=VARCHAR},
+      designer = #{designer,jdbcType=VARCHAR},
+      register = #{register,jdbcType=VARCHAR},
+      checker = #{checker,jdbcType=VARCHAR},
+      changer = #{changer,jdbcType=VARCHAR},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      change_time = #{changeTime,jdbcType=TIMESTAMP},
+      salary_sum = #{salarySum,jdbcType=VARCHAR},
+      check_status = #{checkStatus,jdbcType=VARCHAR},
+      change_status = #{changeStatus,jdbcType=VARCHAR},
+      check_comment = #{checkComment,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where ssd_id = #{ssdId,jdbcType=INTEGER}
+  </update>
+</mapper>

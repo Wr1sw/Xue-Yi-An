@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.EmployeePerformanceMapper">
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.EmployeePerformance">
+    <!--@mbg.generated-->
+    <!--@Table employee_performance-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="kpi" jdbcType="VARCHAR" property="kpi" />
+    <result column="output" jdbcType="DOUBLE" property="output" />
+    <result column="aver_capacity" jdbcType="DOUBLE" property="averCapacity" />
+    <result column="defect_rate" jdbcType="DOUBLE" property="defectRate" />
+    <result column="pass_rate" jdbcType="DOUBLE" property="passRate" />
+    <result column="onepass_rate" jdbcType="DOUBLE" property="onepassRate" />
+    <result column="rework_rate" jdbcType="DOUBLE" property="reworkRate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, kpi, `output`, aver_capacity, defect_rate, pass_rate, onepass_rate, rework_rate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from employee_performance
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from employee_performance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.EmployeePerformance">
+    <!--@mbg.generated-->
+    insert into employee_performance (id, `name`, kpi, 
+      `output`, aver_capacity, defect_rate, 
+      pass_rate, onepass_rate, rework_rate
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{kpi,jdbcType=VARCHAR}, 
+      #{output,jdbcType=DOUBLE}, #{averCapacity,jdbcType=DOUBLE}, #{defectRate,jdbcType=DOUBLE}, 
+      #{passRate,jdbcType=DOUBLE}, #{onepassRate,jdbcType=DOUBLE}, #{reworkRate,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.EmployeePerformance">
+    <!--@mbg.generated-->
+    insert into employee_performance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="kpi != null">
+        kpi,
+      </if>
+      <if test="output != null">
+        `output`,
+      </if>
+      <if test="averCapacity != null">
+        aver_capacity,
+      </if>
+      <if test="defectRate != null">
+        defect_rate,
+      </if>
+      <if test="passRate != null">
+        pass_rate,
+      </if>
+      <if test="onepassRate != null">
+        onepass_rate,
+      </if>
+      <if test="reworkRate != null">
+        rework_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="kpi != null">
+        #{kpi,jdbcType=VARCHAR},
+      </if>
+      <if test="output != null">
+        #{output,jdbcType=DOUBLE},
+      </if>
+      <if test="averCapacity != null">
+        #{averCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="defectRate != null">
+        #{defectRate,jdbcType=DOUBLE},
+      </if>
+      <if test="passRate != null">
+        #{passRate,jdbcType=DOUBLE},
+      </if>
+      <if test="onepassRate != null">
+        #{onepassRate,jdbcType=DOUBLE},
+      </if>
+      <if test="reworkRate != null">
+        #{reworkRate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.EmployeePerformance">
+    <!--@mbg.generated-->
+    update employee_performance
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="kpi != null">
+        kpi = #{kpi,jdbcType=VARCHAR},
+      </if>
+      <if test="output != null">
+        `output` = #{output,jdbcType=DOUBLE},
+      </if>
+      <if test="averCapacity != null">
+        aver_capacity = #{averCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="defectRate != null">
+        defect_rate = #{defectRate,jdbcType=DOUBLE},
+      </if>
+      <if test="passRate != null">
+        pass_rate = #{passRate,jdbcType=DOUBLE},
+      </if>
+      <if test="onepassRate != null">
+        onepass_rate = #{onepassRate,jdbcType=DOUBLE},
+      </if>
+      <if test="reworkRate != null">
+        rework_rate = #{reworkRate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.EmployeePerformance">
+    <!--@mbg.generated-->
+    update employee_performance
+    set `name` = #{name,jdbcType=VARCHAR},
+      kpi = #{kpi,jdbcType=VARCHAR},
+      `output` = #{output,jdbcType=DOUBLE},
+      aver_capacity = #{averCapacity,jdbcType=DOUBLE},
+      defect_rate = #{defectRate,jdbcType=DOUBLE},
+      pass_rate = #{passRate,jdbcType=DOUBLE},
+      onepass_rate = #{onepassRate,jdbcType=DOUBLE},
+      rework_rate = #{reworkRate,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.cuit.xueyian.dao.EmployeeecMapper" >
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.Employeeec" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="eid" property="eid" jdbcType="INTEGER" />
+    <result column="ecDate" property="ecdate" jdbcType="DATE" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="ListInfoMap" type="org.cuit.xueyian.model.EmpEcRP" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="eid" property="eid" jdbcType="INTEGER" />
+    <result column="ecDate" property="ecdate" jdbcType="DATE" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="ecType" property="ecType" jdbcType="INTEGER" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="ename" property="ename" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+
+  <sql id="Base_Column_List" >
+    id, eid, ecDate, rid, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from employeeec
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from employeeec
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.Employeeec" >
+    insert into employeeec (id, eid, ecDate,rid,remark)
+    values (#{id,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{ecdate,jdbcType=DATE}, 
+      #{rid,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.Employeeec" >
+    insert into employeeec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="ecdate != null" >
+        ecDate,
+      </if>
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="ecdate != null" >
+        #{ecdate,jdbcType=DATE},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.Employeeec" >
+    update employeeec
+    <set >
+      <if test="eid != null" >
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="ecdate != null" >
+        ecDate = #{ecdate,jdbcType=DATE},
+      </if>
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.Employeeec" >
+    update employeeec
+    set eid = #{eid,jdbcType=INTEGER},
+      ecDate = #{ecdate,jdbcType=DATE},
+        rid = #{rid,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getEmpEcRPListByPage" resultMap="ListInfoMap" parameterType="map">
+    SELECT
+      empec.*,
+      rp.detail,rp.result,rp.ecType,
+      emp.NAME AS ename
+    FROM
+      `employeeec` AS empec
+        LEFT JOIN `RP` AS rp ON rp.id = empec.rid
+        LEFT JOIN `employee` AS emp ON emp.id = empec.eid
+    ORDER BY
+      empec.id
+    limit #{offsetData},#{PageSize}
+  </select>
+
+  <select id="getTotal" resultType="java.lang.Long">
+    select count(*) from employeeec;
+  </select>
+
+  <select id="queryInfo" parameterType="java.util.Map" resultMap="ListInfoMap">
+    SELECT
+    empec.*,
+    rp.detail,rp.result,rp.ecType,
+    emp.NAME AS ename
+    FROM
+    `employeeec` AS empec
+    left JOIN `RP` AS rp ON rp.id = empec.rid
+    left JOIN `employee` AS emp ON emp.id = empec.eid
+    <where>
+      <if test="ename != null and ename !='' ">
+        and emp.name like  concat('%',#{ename},'%')
+      </if>
+      <if test="ecType != null and ecType !='' ">
+        and rp.ecType = #{ecType}
+      </if>
+      <if test="rid != null and rid !='' ">
+        and rp.id = #{rid}
+      </if>
+    </where>
+    ORDER BY
+    empec.id
+    limit #{offsetData},#{PageSize}
+  </select>
+
+
+<select id="queryInfoLength" resultType="java.lang.Long" parameterType="map">
+  SELECT
+ count(*)
+  FROM
+  `employeeec` AS empec
+  LEFT JOIN `RP` AS rp ON rp.id = empec.rid
+  LEFT JOIN `employee` AS emp ON emp.id = empec.eid
+  <where>
+    <if test="ename != null and ename !='' ">
+      and emp.name like  concat('%',#{ename},'%')
+    </if>
+    <if test="ecType != null and ecType !='' ">
+      and rp.ecType = #{ecType,jdbcType=INTEGER}
+    </if>
+    <if test="rid != null and rid !='' ">
+      and rp.id = #{rid,jdbcType=INTEGER}
+    </if>
+  </where>
+</select>
+
+  <select id="selectById" resultMap="ListInfoMap" parameterType="java.lang.Integer">
+    SELECT
+      empec.*,
+      rp.detail,rp.result,rp.ecType,
+      emp.NAME AS ename
+    FROM
+      `employeeec` AS empec
+        left JOIN `RP` AS rp ON rp.id = empec.rid
+        left JOIN `employee` AS emp ON emp.id = empec.eid
+    where empec.id = #{id}
+  </select>
+</mapper>

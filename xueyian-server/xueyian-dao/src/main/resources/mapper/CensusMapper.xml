@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.cuit.xueyian.dao.CensusMapper">
+    <resultMap id="BaseMap" type="org.cuit.xueyian.model.CensusItem">
+        <result column="item" property="name" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--  获取公司员工毕业学校信息  -->
+    <select id="getSchoolInfo" resultMap="BaseMap">
+        select school as 'item', count(id) as 'value' from employee where school is not null group by school
+    </select>
+    <!--  获取公司每个部门员工数量信息  -->
+    <select id="getDepartmentPerson" resultMap="BaseMap">
+        select department.`name` as 'item' , count(employee.id) as 'value' from employee, department where departmentId is not null and employee.departmentId = department.id GROUP BY departmentId
+    </select>
+    <!--  获取公司员工最高学位信息  -->
+    <select id="getTopDegree" resultMap="BaseMap">
+        select tiptopDegree as 'item', count(id) as 'value' from employee where tiptopDegree is not null group by tiptopDegree
+    </select>
+    <!--  获取公司员工专业信息  -->
+    <select id="getMajor" resultMap="BaseMap">
+        select specialty as 'item', count(id) as 'value' from employee where specialty is not null group by specialty
+    </select>
+    <!--  获取公司员工职称信息  -->
+    <select id="getTitle" resultMap="BaseMap">
+        select joblevel.`name` as 'item' , count(employee.id) as 'value' from employee,joblevel where jobLevelId is not null and employee.jobLevelId = joblevel.id GROUP BY jobLevelId
+    </select>
+    <!--  获取公司员工婚姻状况信息  -->
+    <select id="getWedlock" resultMap="BaseMap">
+        select wedlock as 'item', count(id) as 'value' from employee where wedlock is not null group by wedlock
+    </select>
+
+    <select id="getPoliticStatus" resultMap="BaseMap">
+        select politicsstatus.`name` as 'item', count(employee.politicId) as 'value' from employee, politicsstatus
+        where 
+            employee.politicId = politicsstatus.id 
+            and employee.politicId is not null
+        group by employee.politicId
+    </select>
+    
+    <select id="getGender" resultMap="BaseMap">
+        select gender as 'item', count(gender) as 'value' from employee
+        where gender is not null
+        group by gender
+    </select>
+
+    <select id="getWorkAge" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(id) from employee where workAge is not null and workAge between #{former} and #{latter}
+    </select>
+
+    <select id="getBirthYear" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(id) from employee
+        where
+            birthday is not null
+            and birthday between #{former} and #{latter}
+    </select>
+
+    <select id="getMinWorkAge" resultType="java.lang.Integer">
+        select min(workAge) from employee
+    </select>
+
+    <select id="getMaxWorkAge" resultType="java.lang.Integer">
+        select max(workAge) from employee
+    </select>
+
+    <select id="getMinYear" resultType="java.util.Date">
+        select min(birthday) from  employee
+    </select>
+
+    <select id="getMaxYear" resultType="java.util.Date">
+        select max(birthday) from  employee
+    </select>
+</mapper>

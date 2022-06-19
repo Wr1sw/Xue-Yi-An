@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.TrainMapper">
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.Train">
+    <!--@mbg.generated-->
+    <!--@Table train-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="beginDate" jdbcType="DATE" property="beginDate" />
+    <result column="endDate" jdbcType="DATE" property="endDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, content, beginDate, endDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from train
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from train
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.Train">
+    <!--@mbg.generated-->
+    insert into train (`name`, content,
+      beginDate, endDate)
+    values (#{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+      #{beginDate,jdbcType=DATE}, #{endDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.Train">
+    <!--@mbg.generated-->
+    insert into train
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="beginDate != null">
+        beginDate,
+      </if>
+      <if test="endDate != null">
+        endDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+        #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.Train">
+    <!--@mbg.generated-->
+    update train
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+        beginDate = #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        endDate = #{endDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.Train">
+    <!--@mbg.generated-->
+    update train
+    set `name` = #{name,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      beginDate = #{beginDate,jdbcType=DATE},
+      endDate = #{endDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllTrain" resultMap="BaseResultMap">
+    select * from train
+  </select>
+
+
+  <!-- 查看有哪些培训 -->
+  <select id="getTrainList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from train
+    limit #{pageSize}
+    offset #{offsetData}
+  </select>
+  <select id="countRowsNum" resultType="java.lang.Integer">
+    select count(id) as num from train
+  </select>
+
+  <select id="getAllTrainList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from train
+  </select>
+</mapper>

@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.cuit.xueyian.dao.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.Employee" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="idCard" property="idcard" jdbcType="CHAR" />
+    <result column="wedlock" property="wedlock" jdbcType="CHAR" />
+    <result column="nationId" property="nationid" jdbcType="INTEGER" />
+    <result column="nativePlace" property="nativeplace" jdbcType="VARCHAR" />
+    <result column="politicId" property="politicid" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentid" jdbcType="INTEGER" />
+    <result column="jobLevelId" property="joblevelid" jdbcType="INTEGER" />
+    <result column="posId" property="posid" jdbcType="INTEGER" />
+    <result column="engageForm" property="engageform" jdbcType="VARCHAR" />
+    <result column="tiptopDegree" property="tiptopdegree" jdbcType="CHAR" />
+    <result column="specialty" property="specialty" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="beginDate" property="begindate" jdbcType="DATE" />
+    <result column="workState" property="workstate" jdbcType="CHAR" />
+    <result column="workID" property="workid" jdbcType="CHAR" />
+    <result column="contractTerm" property="contractterm" jdbcType="DOUBLE" />
+    <result column="conversionTime" property="conversiontime" jdbcType="DATE" />
+    <result column="notWorkDate" property="notworkdate" jdbcType="DATE" />
+    <result column="beginContract" property="begincontract" jdbcType="DATE" />
+    <result column="endContract" property="endcontract" jdbcType="DATE" />
+    <result column="workAge" property="workage" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="EmployeeWithSalary" type="org.cuit.xueyian.model.Employee" extends="BaseResultMap">
+    <association property="salary" javaType="org.cuit.xueyian.model.Salary">
+      <id column="sid" property="id" javaType="Integer"/>
+      <result column="sbasicSalary" property="basicSalary" jdbcType="INTEGER" />
+      <result column="sname" property="name" jdbcType="INTEGER"/>
+      <result column="sbonus" property="bonus" jdbcType="INTEGER" />
+      <result column="slunchSalary" property="lunchSalary" jdbcType="INTEGER" />
+      <result column="strafficSalary" property="trafficSalary" jdbcType="INTEGER" />
+      <result column="sallSalary" property="allSalary" jdbcType="INTEGER" />
+      <result column="spensionBase" property="pensionBase" jdbcType="INTEGER" />
+      <result column="spensionPer" property="pensionPer" jdbcType="REAL" />
+      <result column="screateDate" property="createDate" jdbcType="TIMESTAMP" />
+      <result column="smedicalBase" property="medicalBase" jdbcType="INTEGER" />
+      <result column="smedicalPer" property="medicalPer" jdbcType="REAL" />
+      <result column="saccumulationFundBase" property="accumulationFundBase" jdbcType="INTEGER" />
+      <result column="saccumulationFundPer" property="accumulationFundPer" jdbcType="REAL" />
+      <result column="sname" property="name" jdbcType="VARCHAR" />
+    </association>
+    <association property="department" javaType="org.cuit.xueyian.model.Department">
+      <result column="dname" property="name"/>
+    </association>
+  </resultMap>
+
+  <resultMap id="EmployeeBaseInfo" type="org.cuit.xueyian.model.Employee" extends="BaseResultMap">
+    <association property="department" javaType="org.cuit.xueyian.model.Department">
+      <result column="dname" property="name"/>
+    </association>
+
+    <association property="jOblevel" javaType="org.cuit.xueyian.model.JObLevel">
+      <result column="jobname" property="name" jdbcType="VARCHAR"/>
+    </association>
+    <association property="position" javaType="org.cuit.xueyian.model.Position">
+      <result column="positionname" property="name" jdbcType="VARCHAR"/>
+    </association>
+  </resultMap>
+  <resultMap id="EmployeeWithSalaryStandard" type="org.cuit.xueyian.model.Employee" extends="BaseResultMap">
+    <association property="salaryStandardDetails" javaType="org.cuit.xueyian.model.SalaryStandardDetails">
+      <id column="sdt_id" jdbcType="INTEGER" property="sdtId"/>
+      <result column="standard_id" jdbcType="VARCHAR" property="standardId"/>
+      <result column="standard_name" jdbcType="VARCHAR" property="standardName"/>
+      <result column="basic_salary" jdbcType="INTEGER" property="basicSalary"/>
+      <result column="lunch_salary" jdbcType="INTEGER" property="lunchSalary"/>
+      <result column="traffic_salary" jdbcType="INTEGER" property="trafficSalary"/>
+      <result column="all_salary" jdbcType="INTEGER" property="allSalary"/>
+      <result column="pension_base" jdbcType="INTEGER" property="pensionBase"/>
+      <result column="pension_per" jdbcType="REAL" property="pensionPer"/>
+      <result column="medical_base" jdbcType="INTEGER" property="medicalBase"/>
+      <result column="medical_per" jdbcType="REAL" property="medicalPer"/>
+      <result column="accumulationFund_base" jdbcType="INTEGER" property="accumulationfundBase"/>
+      <result column="accumulationFund_per" jdbcType="REAL" property="accumulationfundPer"/>
+      <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    </association>
+      <association property="department" javaType="org.cuit.xueyian.model.Department">
+          <result column="dname" property="name"/>
+      </association>
+  </resultMap>
+    <sql id="Base_Column_List">
+    id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, 
+    phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, 
+    school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, 
+    beginContract, endContract, workAge
+  </sql>
+    <select id="getEmployeeByPageS">
+        SELECT DISTINCT
+        e.*,
+        d.`name` AS dname,
+        s.`id` AS sid,
+        s.`accumulationFundBase` AS saccumulationFundBase,
+        s.`accumulationFundPer` AS saccumulationFundPer,
+        s.`allSalary` AS sallSalary,
+        s.`basicSalary` AS sbasicSalary,
+        s.`bonus` AS sbonus,
+        s.`createDate` AS screateDate,
+        s.`lunchSalary` AS slunchSalary,
+        s.`medicalBase` AS smedicalBase,
+        s.`medicalPer` AS smedicalPer,
+        s.`name` AS sname,
+        s.`pensionBase` AS spensionBase,
+        s.`pensionPer` AS spensionPer,
+        s.`trafficSalary` AS strafficSalary,
+        j.`id` AS jid,
+        j.`name` AS jname,
+        pos.`id` AS posid,
+        pos.`name` AS posname
+        FROM
+        employee e
+        INNER JOIN empsalary es ON e.`id` = es.`eid`
+        INNER JOIN salary s ON es.`sid` = s.`id`
+        INNER JOIN department d ON e.`departmentId` = d.`id`
+        INNER JOIN joblevel j ON e.`jobLevelId` = j.`id`
+        INNER JOIN position pos ON e.posId = pos.id
+        <if test="emp != null">
+            <if test="emp.name !=null and emp.name!=''">
+                and e.name like concat('%',#{emp.name},'%')
+            </if>
+            <if test="emp.politicid !=null">
+                and e.politicId =#{emp.politicid}
+            </if>
+            <if test="emp.nationid !=null">
+                and e.nationId =#{emp.nationid}
+            </if>
+            <if test="emp.joblevelid !=null">
+                and e.jobLevelId =#{emp.joblevelid}
+            </if>
+            <if test="emp.departmentid !=null">
+                and e.departmentId =#{emp.departmentid}
+            </if>
+            <if test="emp.engageform !=null and emp.engageform!=''">
+                and e.engageForm =#{emp.engageform}
+            </if>
+            <if test="emp.posid !=null">
+                and e.posId =#{emp.posid}
+            </if>
+        </if>
+        <if test="beginDateScope !=null">
+            and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+        </if>
+        <if test="page !=null and size !=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getEmployeeWithAllById" resultMap="EmployeeBaseInfo">
+    SELECT
+      emp.*,
+      dep.NAME AS dname,
+      jObLevel.Name AS jobname,
+      position.Name AS positionname
+    FROM
+      `employee` AS emp
+        LEFT JOIN `joblevel` AS jObLevel ON jObLevel.id = emp.jobLevelId
+        LEFT JOIN `position` AS position ON position.id = emp.posId
+        LEFT JOIN `department` AS dep ON dep.id = emp.departmentId
+    where emp.id = #{id}
+  </select>
+  <select id="getEmployeeByPageWithSalaryStandard" resultMap="EmployeeWithSalaryStandard">
+    SELECT
+        emp.*,
+        dep.NAME AS dname,
+        sdt.*
+    FROM
+        `employee` AS emp
+        LEFT JOIN `salary_emp` AS se ON se.eid = emp.id
+        LEFT JOIN `salary_standard` AS ssd ON ssd.ssd_id = se.sid
+        LEFT JOIN `salary_standard_details` AS sdt ON sdt.standard_id = ssd.standard_id
+        LEFT JOIN `department` AS dep ON dep.id = emp.departmentId
+    ORDER BY
+        emp.id
+        limit #{page},#{size}
+  </select>
+  <select id="getEmployeeByPageWithSalary" resultMap="EmployeeWithSalary">
+    SELECT
+        emp.*,
+        dep.NAME AS dname,
+        sa.id AS sid,
+        sa.name as sname,
+        sa.basicSalary AS sbasicSalary,
+        sa.bonus AS sbonus,
+        sa.lunchSalary AS slunchSalary,
+        sa.trafficSalary AS strafficSalary,
+        sa.allSalary AS sallSalary,
+        sa.pensionBase AS spensionBase,
+        sa.pensionPer AS spensionPer,
+        sa.createDate AS screateDate,
+        sa.medicalBase AS smedicalBase,
+        sa.medicalPer AS smedicalPer,
+        sa.accumulationFundBase AS saccumulationFundBase,
+        sa.accumulationFundPer AS saccumulationFundPer
+    FROM
+        `employee` AS emp
+        LEFT JOIN `empsalary` AS es ON es.eid = emp.id
+        LEFT JOIN `salary` AS sa ON sa.id = es.sid
+        LEFT JOIN `department` AS dep ON dep.id = emp.departmentId
+    ORDER BY
+        emp.id
+    limit #{page},#{size}
+  </select>
+  <insert id="updateEmployeeOfSalaryStandardById">
+    replace into salary_emp(eid, sid) values (#{eid}, #{sid})
+  </insert>
+  <insert id="updateEmployeeOfSalaryById">
+    replace into empsalary(eid, sid) values (#{eid}, #{sid})
+  </insert>
+  <select id="getTotal" resultType="java.lang.Long">
+    select count(*) from employee e;
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from employee
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from employee
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.Employee" >
+    insert into employee (id, name, gender, 
+      birthday, idCard, wedlock, nationId, 
+      nativePlace, politicId, email, 
+      phone, address, departmentId, 
+      jobLevelId, posId, engageForm, 
+      tiptopDegree, specialty, school, 
+      beginDate, workState, workID, 
+      contractTerm, conversionTime, notWorkDate, 
+      beginContract, endContract, workAge
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{birthday,jdbcType=DATE}, #{idcard,jdbcType=CHAR}, #{wedlock,jdbcType=CHAR}, #{nationid,jdbcType=INTEGER}, 
+      #{nativeplace,jdbcType=VARCHAR}, #{politicid,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, 
+      #{joblevelid,jdbcType=INTEGER}, #{posid,jdbcType=INTEGER}, #{engageform,jdbcType=VARCHAR}, 
+      #{tiptopdegree,jdbcType=CHAR}, #{specialty,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{begindate,jdbcType=DATE}, #{workstate,jdbcType=CHAR}, #{workid,jdbcType=CHAR}, 
+      #{contractterm,jdbcType=DOUBLE}, #{conversiontime,jdbcType=DATE}, #{notworkdate,jdbcType=DATE}, 
+      #{begincontract,jdbcType=DATE}, #{endcontract,jdbcType=DATE}, #{workage,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.Employee" useGeneratedKeys="true" keyProperty="id">
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="idcard != null" >
+        idCard,
+      </if>
+      <if test="wedlock != null" >
+        wedlock,
+      </if>
+      <if test="nationid != null" >
+        nationId,
+      </if>
+      <if test="nativeplace != null" >
+        nativePlace,
+      </if>
+      <if test="politicid != null" >
+        politicId,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="departmentid != null" >
+        departmentId,
+      </if>
+      <if test="joblevelid != null" >
+        jobLevelId,
+      </if>
+      <if test="posid != null" >
+        posId,
+      </if>
+      <if test="engageform != null" >
+        engageForm,
+      </if>
+      <if test="tiptopdegree != null" >
+        tiptopDegree,
+      </if>
+      <if test="specialty != null" >
+        specialty,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="begindate != null" >
+        beginDate,
+      </if>
+      <if test="workstate != null" >
+        workState,
+      </if>
+      <if test="workid != null" >
+        workID,
+      </if>
+      <if test="contractterm != null" >
+        contractTerm,
+      </if>
+      <if test="conversiontime != null" >
+        conversionTime,
+      </if>
+      <if test="notworkdate != null" >
+        notWorkDate,
+      </if>
+      <if test="begincontract != null" >
+        beginContract,
+      </if>
+      <if test="endcontract != null" >
+        endContract,
+      </if>
+      <if test="workage != null" >
+        workAge,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=CHAR},
+      </if>
+      <if test="wedlock != null" >
+        #{wedlock,jdbcType=CHAR},
+      </if>
+      <if test="nationid != null" >
+        #{nationid,jdbcType=INTEGER},
+      </if>
+      <if test="nativeplace != null" >
+        #{nativeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="politicid != null" >
+        #{politicid,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="joblevelid != null" >
+        #{joblevelid,jdbcType=INTEGER},
+      </if>
+      <if test="posid != null" >
+        #{posid,jdbcType=INTEGER},
+      </if>
+      <if test="engageform != null" >
+        #{engageform,jdbcType=VARCHAR},
+      </if>
+      <if test="tiptopdegree != null" >
+        #{tiptopdegree,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        #{begindate,jdbcType=DATE},
+      </if>
+      <if test="workstate != null" >
+        #{workstate,jdbcType=CHAR},
+      </if>
+      <if test="workid != null" >
+        #{workid,jdbcType=CHAR},
+      </if>
+      <if test="contractterm != null" >
+        #{contractterm,jdbcType=DOUBLE},
+      </if>
+      <if test="conversiontime != null" >
+        #{conversiontime,jdbcType=DATE},
+      </if>
+      <if test="notworkdate != null" >
+        #{notworkdate,jdbcType=DATE},
+      </if>
+      <if test="begincontract != null" >
+        #{begincontract,jdbcType=DATE},
+      </if>
+      <if test="endcontract != null" >
+        #{endcontract,jdbcType=DATE},
+      </if>
+      <if test="workage != null" >
+        #{workage,jdbcType=INTEGER},
+      </if>
+    </trim>
+
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.Employee" >
+    update employee
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="idcard != null" >
+        idCard = #{idcard,jdbcType=CHAR},
+      </if>
+      <if test="wedlock != null" >
+        wedlock = #{wedlock,jdbcType=CHAR},
+      </if>
+      <if test="nationid != null" >
+        nationId = #{nationid,jdbcType=INTEGER},
+      </if>
+      <if test="nativeplace != null" >
+        nativePlace = #{nativeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="politicid != null" >
+        politicId = #{politicid,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentId = #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="joblevelid != null" >
+        jobLevelId = #{joblevelid,jdbcType=INTEGER},
+      </if>
+      <if test="posid != null" >
+        posId = #{posid,jdbcType=INTEGER},
+      </if>
+      <if test="engageform != null" >
+        engageForm = #{engageform,jdbcType=VARCHAR},
+      </if>
+      <if test="tiptopdegree != null" >
+        tiptopDegree = #{tiptopdegree,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        beginDate = #{begindate,jdbcType=DATE},
+      </if>
+      <if test="workstate != null" >
+        workState = #{workstate,jdbcType=CHAR},
+      </if>
+      <if test="workid != null" >
+        workID = #{workid,jdbcType=CHAR},
+      </if>
+      <if test="contractterm != null" >
+        contractTerm = #{contractterm,jdbcType=DOUBLE},
+      </if>
+      <if test="conversiontime != null" >
+        conversionTime = #{conversiontime,jdbcType=DATE},
+      </if>
+      <if test="notworkdate != null" >
+        notWorkDate = #{notworkdate,jdbcType=DATE},
+      </if>
+      <if test="begincontract != null" >
+        beginContract = #{begincontract,jdbcType=DATE},
+      </if>
+      <if test="endcontract != null" >
+        endContract = #{endcontract,jdbcType=DATE},
+      </if>
+      <if test="workage != null" >
+        workAge = #{workage,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.Employee" >
+    update employee
+    set name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      idCard = #{idcard,jdbcType=CHAR},
+      wedlock = #{wedlock,jdbcType=CHAR},
+      nationId = #{nationid,jdbcType=INTEGER},
+      nativePlace = #{nativeplace,jdbcType=VARCHAR},
+      politicId = #{politicid,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      departmentId = #{departmentid,jdbcType=INTEGER},
+      jobLevelId = #{joblevelid,jdbcType=INTEGER},
+      posId = #{posid,jdbcType=INTEGER},
+      engageForm = #{engageform,jdbcType=VARCHAR},
+      tiptopDegree = #{tiptopdegree,jdbcType=CHAR},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      beginDate = #{begindate,jdbcType=DATE},
+      workState = #{workstate,jdbcType=CHAR},
+      workID = #{workid,jdbcType=CHAR},
+      contractTerm = #{contractterm,jdbcType=DOUBLE},
+      conversionTime = #{conversiontime,jdbcType=DATE},
+      notWorkDate = #{notworkdate,jdbcType=DATE},
+      beginContract = #{begincontract,jdbcType=DATE},
+      endContract = #{endcontract,jdbcType=DATE},
+      workAge = #{workage,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getEmployeeList" resultMap="BaseResultMap" parameterType="HashMap">
+    select id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, beginContract, endContract, workAge
+    from employee
+    limit #{PageSize}
+    offset #{offsetData}
+</select>
+
+
+
+  <select id="getEmployeeListLength" parameterType="org.cuit.xueyian.model.Employee" resultType="int">
+    select count(*) from employee
+    <where>
+      <if test="name != null and name !='' ">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="gender != null and gender !='' ">
+        and gender = #{gender,jdbcType=CHAR}
+      </if>
+      <if test="birthday != null and birthday !='' ">
+        and birthday = #{birthday,jdbcType=DATE}
+      </if>
+      <if test="idcard != null and idcard !='' " >
+        and idCard = #{idcard,jdbcType=CHAR}
+      </if>
+      <if test="wedlock != null and wedlock !='' " >
+        and wedlock = #{wedlock,jdbcType=CHAR}
+      </if>
+      <if test="nationid != null and nationid !='' ">
+        and nationId = #{nationid,jdbcType=INTEGER}
+      </if>
+      <if test="nativeplace != null and nativeplace !='' " >
+        and nativePlace = #{nativeplace,jdbcType=VARCHAR}
+      </if>
+      <if test="politicid != null and politicid !='' " >
+        and politicId = #{politicid,jdbcType=INTEGER}
+      </if>
+      <if test="email != null and email !='' " >
+        and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="phone != null and phone !='' " >
+        and phone = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test="address != null and address !='' " >
+        and address = #{address,jdbcType=VARCHAR}
+      </if>
+      <if test="departmentid != null and departmentid !='' ">
+        and departmentId = #{departmentid,jdbcType=INTEGER}
+      </if>
+      <if test="joblevelid != null and joblevelid !='' " >
+        and jobLevelId = #{joblevelid,jdbcType=INTEGER}
+      </if>
+      <if test="posid != null and posid !='' " >
+        and posId = #{posid,jdbcType=INTEGER}
+      </if>
+      <if test="engageform != null and engageform !='' " >
+        and engageForm = #{engageform,jdbcType=VARCHAR}
+      </if>
+      <if test="tiptopdegree != null and tiptopdegree !='' " >
+        and tiptopDegree = #{tiptopdegree,jdbcType=CHAR}
+      </if>
+      <if test="specialty != null and specialty !='' " >
+        and specialty = #{specialty,jdbcType=VARCHAR}
+      </if>
+      <if test="school != null and school !='' " >
+        and school = #{school,jdbcType=VARCHAR}
+      </if>
+      <if test="begindate != null and begindate !='' " >
+        and beginDate = #{begindate,jdbcType=DATE}
+      </if>
+      <if test="workstate != null and workstate !='' " >
+        and workState = #{workstate,jdbcType=CHAR}
+      </if>
+      <if test="workid != null and workid !='' " >
+        and workID = #{workid,jdbcType=CHAR}
+      </if>
+      <if test="contractterm != null and contractterm !='' " >
+        and contractTerm = #{contractterm,jdbcType=DOUBLE}
+      </if>
+      <if test="conversiontime != null and conversiontime !='' " >
+        and conversionTime = #{conversiontime,jdbcType=DATE}
+      </if>
+      <if test="notworkdate != null and notworkdate !='' " >
+        and notWorkDate = #{notworkdate,jdbcType=DATE}
+      </if>
+      <if test="begincontract != null and begincontract !='' ">
+        and beginContract = #{begincontract,jdbcType=DATE}
+      </if>
+      <if test="endcontract != null and endcontract !='' " >
+        and endContract = #{endcontract,jdbcType=DATE}
+      </if>
+      <if test="workage != null and workage !='' " >
+        and workAge = #{workage,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+<!--  给定条件查询-->
+<!--<select id="queryInfo" resultMap="BaseResultMap" parameterType="org.cuit.xueyian.model.Employee">-->
+<!--  select id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, beginContract, endContract, workAge-->
+<!--  from employee-->
+<!--  <where>-->
+<!--  <if test="name != null and name !='' ">-->
+<!--    and name = #{name,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="gender != null and gender !='' ">-->
+<!--    and gender = #{gender,jdbcType=CHAR}-->
+<!--  </if>-->
+<!--  <if test="birthday != null and birthday !='' ">-->
+<!--    and birthday = #{birthday,jdbcType=DATE}-->
+<!--  </if>-->
+<!--  <if test="idcard != null and idcard !='' " >-->
+<!--    and idCard = #{idcard,jdbcType=CHAR}-->
+<!--  </if>-->
+<!--  <if test="wedlock != null and wedlock !='' " >-->
+<!--    and wedlock = #{wedlock,jdbcType=CHAR}-->
+<!--  </if>-->
+<!--  <if test="nationid != null and nationid !='' ">-->
+<!--    and nationId = #{nationid,jdbcType=INTEGER}-->
+<!--  </if>-->
+<!--  <if test="nativeplace != null and nativeplace !='' " >-->
+<!--    and nativePlace = #{nativeplace,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="politicid != null and politicid !='' " >-->
+<!--    and politicId = #{politicid,jdbcType=INTEGER}-->
+<!--  </if>-->
+<!--  <if test="email != null and email !='' " >-->
+<!--    and email = #{email,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="phone != null and phone !='' " >-->
+<!--    and phone = #{phone,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="address != null and address !='' " >-->
+<!--    and address = #{address,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="departmentid != null and departmentid !='' ">-->
+<!--    and departmentId = #{departmentid,jdbcType=INTEGER}-->
+<!--  </if>-->
+<!--  <if test="joblevelid != null and joblevelid !='' " >-->
+<!--    and jobLevelId = #{joblevelid,jdbcType=INTEGER}-->
+<!--  </if>-->
+<!--  <if test="posid != null and posid !='' " >-->
+<!--    and posId = #{posid,jdbcType=INTEGER}-->
+<!--  </if>-->
+<!--  <if test="engageform != null and engageform !='' " >-->
+<!--    and engageForm = #{engageform,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="tiptopdegree != null and tiptopdegree !='' " >-->
+<!--    and tiptopDegree = #{tiptopdegree,jdbcType=CHAR}-->
+<!--  </if>-->
+<!--  <if test="specialty != null and specialty !='' " >-->
+<!--    and specialty = #{specialty,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="school != null and school !='' " >-->
+<!--    and school = #{school,jdbcType=VARCHAR}-->
+<!--  </if>-->
+<!--  <if test="begindate != null and begindate !='' " >-->
+<!--    and beginDate = #{begindate,jdbcType=DATE}-->
+<!--  </if>-->
+<!--  <if test="workstate != null and workstate !='' " >-->
+<!--    and workState = #{workstate,jdbcType=CHAR}-->
+<!--  </if>-->
+<!--  <if test="workid != null and workid !='' " >-->
+<!--    and workID = #{workid,jdbcType=CHAR}-->
+<!--  </if>-->
+<!--  <if test="contractterm != null and contractterm !='' " >-->
+<!--    and contractTerm = #{contractterm,jdbcType=DOUBLE}-->
+<!--  </if>-->
+<!--  <if test="conversiontime != null and conversiontime !='' " >-->
+<!--    and conversionTime = #{conversiontime,jdbcType=DATE}-->
+<!--  </if>-->
+<!--  <if test="notworkdate != null and notworkdate !='' " >-->
+<!--    and notWorkDate = #{notworkdate,jdbcType=DATE}-->
+<!--  </if>-->
+<!--  <if test="begincontract != null and begincontract !='' ">-->
+<!--    and beginContract = #{begincontract,jdbcType=DATE}-->
+<!--  </if>-->
+<!--  <if test="endcontract != null and endcontract !='' " >-->
+<!--    and endContract = #{endcontract,jdbcType=DATE}-->
+<!--  </if>-->
+<!--  <if test="workage != null and workage !='' " >-->
+<!--    and workAge = #{workage,jdbcType=INTEGER}-->
+<!--  </if>-->
+<!--  </where>-->
+<!--</select>-->
+
+  <!-- 查询所有的员工信息 Miracle adds -->
+  <select id="queryALl" resultMap="BaseResultMap">
+    select * from employee
+  </select>
+
+  <!-- 查询离职的员工 created by Miracle -->
+  <select id="getResignedEmployeeList" resultMap="BaseResultMap" parameterType="HashMap">
+    select id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, beginContract, endContract, workAge
+    from employee where notworkdate is not null
+      limit #{PageSize}
+    offset #{offsetData}
+  </select>
+
+  <!-- 查询指定工号的员工 created by Miracle -->
+  <select id="selectByWorkerId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from employee
+    where workID = #{workId,jdbcType=CHAR}
+  </select>
+
+  <select id="queryInfo" resultMap="EmployeeBaseInfo" parameterType="HashMap">
+    SELECT
+    emp.*,
+    dep.NAME AS dname,
+    jObLevel.Name AS jobname,
+    position.Name AS positionname
+    FROM
+    `employee` AS emp
+    LEFT JOIN `joblevel` AS jObLevel ON jObLevel.id = emp.jobLevelId
+    LEFT JOIN `position` AS position ON position.id = emp.posId
+    LEFT JOIN `department` AS dep ON dep.id = emp.departmentId
+
+    <where>
+      <if test="name != null and name !='' ">
+        and emp.name like  concat('%',#{name},'%')
+      </if>
+      <if test="gender != null and gender !='' ">
+        and emp.gender = #{gender,jdbcType=CHAR}
+      </if>
+      <if test="departmentid != null and departmentid !='' ">
+        and emp.departmentId = #{departmentid,jdbcType=INTEGER}
+      </if>
+    </where>
+    ORDER BY
+    emp.id
+    limit #{offsetData},#{PageSize}
+  </select>
+
+  <select id="getEmployeeListByPage" resultMap="EmployeeBaseInfo" parameterType="map">
+    SELECT
+      emp.*,
+      dep.NAME AS dname,
+      jObLevel.Name AS jobname,
+      position.Name AS positionname
+    FROM
+      `employee` AS emp
+        LEFT JOIN `joblevel` AS jObLevel ON jObLevel.id = emp.jobLevelId
+        LEFT JOIN `position` AS position ON position.id = emp.posId
+        LEFT JOIN `department` AS dep ON dep.id = emp.departmentId
+    ORDER BY
+      emp.id
+    limit #{offsetData},#{PageSize}
+  </select>
+
+  <select id="queryInfoLength" parameterType="map" resultType="java.lang.Long">
+    SELECT
+    count(*)
+    FROM
+    `employee` AS emp
+    LEFT JOIN `joblevel` AS jObLevel ON jObLevel.id = emp.jobLevelId
+    LEFT JOIN `position` AS position ON position.id = emp.posId
+    LEFT JOIN `department` AS dep ON dep.id = emp.departmentId
+
+    <where>
+      <if test="name != null and name !='' ">
+        and emp.name like concat('%',#{name},'%')
+      </if>
+      <if test="gender != null and gender !='' ">
+        and emp.gender = #{gender,jdbcType=CHAR}
+      </if>
+      <if test="departmentid != null and departmentid !='' ">
+        and emp.departmentId = #{departmentid,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="getLastWorkId" resultType="java.lang.String">
+    select workID from employee where id=(select max(id) from employee)
+  </select>
+
+  <select id="getAllEmpByDepId" resultMap="BaseResultMap">
+    SELECT * from employee where departmentId = #{departmentId}
+  </select>
+
+  <select id="selectAllInfoById" resultMap="EmployeeBaseInfo" parameterType="java.lang.Integer">
+    SELECT
+    emp.*,
+    dep.NAME AS dname,
+    jObLevel.Name AS jobname,
+    position.Name AS positionname
+    FROM
+    `employee` AS emp
+    LEFT JOIN `joblevel` AS jObLevel ON jObLevel.id = emp.jobLevelId
+    LEFT JOIN `position` AS position ON position.id = emp.posId
+    LEFT JOIN `department` AS dep ON dep.id = emp.departmentId
+    where emp.id = #{id}
+  </select>
+</mapper>

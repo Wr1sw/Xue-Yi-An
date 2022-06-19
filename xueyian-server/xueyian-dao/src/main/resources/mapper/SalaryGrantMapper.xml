@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.SalaryGrantMapper">
+    <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.SalaryGrant">
+        <id column="sgr_id" jdbcType="INTEGER" property="sgrId"/>
+        <result column="salary_grant_id" jdbcType="VARCHAR" property="salaryGrantId"/>
+        <result column="salary_standard_id" jdbcType="VARCHAR" property="salaryStandardId"/>
+        <result column="salary_standard_sum" jdbcType="INTEGER" property="salaryStandardSum"/>
+        <result column="salary_paid_sum" jdbcType="INTEGER" property="salaryPaidSum"/>
+        <result column="register" jdbcType="VARCHAR" property="register"/>
+        <result column="regist_time" jdbcType="TIMESTAMP" property="registTime"/>
+        <result column="checker" jdbcType="VARCHAR" property="checker"/>
+        <result column="check_time" jdbcType="TIMESTAMP" property="checkTime"/>
+        <result column="check_status" jdbcType="VARCHAR" property="checkStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    sgr_id, salary_grant_id, salary_standard_id, salary_standard_sum, salary_paid_sum, 
+    register, regist_time, checker, check_time, check_status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from salary_grant
+        where sgr_id = #{sgrId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from salary_grant
+    where sgr_id = #{sgrId,jdbcType=INTEGER}
+  </delete>
+    <update id="updateSalary" parameterType="java.lang.String">
+        update salary_grant
+        set check_status=1
+        where salary_grant_id = #{salary_grant_id,jdbcType=VARCHAR}
+    </update>
+    <insert id="insert" parameterType="org.cuit.xueyian.model.SalaryGrant">
+    insert into salary_grant (sgr_id, salary_grant_id, salary_standard_id, 
+      salary_standard_sum, salary_paid_sum, register, 
+      regist_time, checker, check_time, 
+      check_status)
+    values (#{sgrId,jdbcType=INTEGER}, #{salaryGrantId,jdbcType=VARCHAR}, #{salaryStandardId,jdbcType=VARCHAR}, 
+      #{salaryStandardSum,jdbcType=INTEGER}, #{salaryPaidSum,jdbcType=INTEGER}, #{register,jdbcType=VARCHAR}, 
+      #{registTime,jdbcType=TIMESTAMP}, #{checker,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{checkStatus,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="org.cuit.xueyian.model.SalaryGrant">
+        insert into salary_grant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sgrId != null">
+                sgr_id,
+            </if>
+            <if test="salaryGrantId != null">
+                salary_grant_id,
+            </if>
+            <if test="salaryStandardId != null">
+                salary_standard_id,
+            </if>
+            <if test="salaryStandardSum != null">
+                salary_standard_sum,
+            </if>
+            <if test="salaryPaidSum != null">
+                salary_paid_sum,
+            </if>
+            <if test="register != null">
+                register,
+            </if>
+            <if test="registTime != null">
+                regist_time,
+            </if>
+            <if test="checker != null">
+                checker,
+            </if>
+            <if test="checkTime != null">
+                check_time,
+            </if>
+            <if test="checkStatus != null">
+                check_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sgrId != null">
+                #{sgrId,jdbcType=INTEGER},
+            </if>
+            <if test="salaryGrantId != null">
+                #{salaryGrantId,jdbcType=VARCHAR},
+            </if>
+            <if test="salaryStandardId != null">
+                #{salaryStandardId,jdbcType=VARCHAR},
+            </if>
+            <if test="salaryStandardSum != null">
+                #{salaryStandardSum,jdbcType=INTEGER},
+            </if>
+            <if test="salaryPaidSum != null">
+                #{salaryPaidSum,jdbcType=INTEGER},
+            </if>
+            <if test="register != null">
+                #{register,jdbcType=VARCHAR},
+            </if>
+            <if test="registTime != null">
+                #{registTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checker != null">
+                #{checker,jdbcType=VARCHAR},
+            </if>
+            <if test="checkTime != null">
+                #{checkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkStatus != null">
+                #{checkStatus,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.SalaryGrant">
+        update salary_grant
+        <set>
+            <if test="salaryGrantId != null">
+                salary_grant_id = #{salaryGrantId,jdbcType=VARCHAR},
+            </if>
+            <if test="salaryStandardId != null">
+                salary_standard_id = #{salaryStandardId,jdbcType=VARCHAR},
+            </if>
+            <if test="salaryStandardSum != null">
+                salary_standard_sum = #{salaryStandardSum,jdbcType=INTEGER},
+            </if>
+            <if test="salaryPaidSum != null">
+                salary_paid_sum = #{salaryPaidSum,jdbcType=INTEGER},
+            </if>
+            <if test="register != null">
+                register = #{register,jdbcType=VARCHAR},
+            </if>
+            <if test="registTime != null">
+                regist_time = #{registTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checker != null">
+                checker = #{checker,jdbcType=VARCHAR},
+            </if>
+            <if test="checkTime != null">
+                check_time = #{checkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where sgr_id = #{sgrId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.SalaryGrant">
+    update salary_grant
+    set salary_grant_id = #{salaryGrantId,jdbcType=VARCHAR},
+      salary_standard_id = #{salaryStandardId,jdbcType=VARCHAR},
+      salary_standard_sum = #{salaryStandardSum,jdbcType=INTEGER},
+      salary_paid_sum = #{salaryPaidSum,jdbcType=INTEGER},
+      register = #{register,jdbcType=VARCHAR},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      checker = #{checker,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      check_status = #{checkStatus,jdbcType=VARCHAR}
+    where sgr_id = #{sgrId,jdbcType=INTEGER}
+  </update>
+</mapper>

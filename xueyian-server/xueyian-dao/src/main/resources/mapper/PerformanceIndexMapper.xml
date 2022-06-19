@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.PerformanceIndexMapper">
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.PerformanceIndex">
+    <!--@mbg.generated-->
+    <!--@Table performance_index-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="output" jdbcType="DOUBLE" property="output" />
+    <result column="output_score" jdbcType="INTEGER" property="outputScore" />
+    <result column="aver_capacity" jdbcType="DOUBLE" property="averCapacity" />
+    <result column="aver_capacity_score" jdbcType="INTEGER" property="averCapacityScore" />
+    <result column="defect_rate" jdbcType="DOUBLE" property="defectRate" />
+    <result column="defect_rate_score" jdbcType="INTEGER" property="defectRateScore" />
+    <result column="pass_rate" jdbcType="DOUBLE" property="passRate" />
+    <result column="pass_rate_score" jdbcType="INTEGER" property="passRateScore" />
+    <result column="onepass_rate" jdbcType="DOUBLE" property="onepassRate" />
+    <result column="onepass_rate_score" jdbcType="INTEGER" property="onepassRateScore" />
+    <result column="rework_rate" jdbcType="DOUBLE" property="reworkRate" />
+    <result column="rework_rate_score" jdbcType="INTEGER" property="reworkRateScore" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `output`, output_score, aver_capacity, aver_capacity_score, defect_rate, defect_rate_score, 
+    pass_rate, pass_rate_score, onepass_rate, onepass_rate_score, rework_rate, rework_rate_score
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from performance_index
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from performance_index
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.PerformanceIndex">
+    <!--@mbg.generated-->
+    insert into performance_index (id, `output`, output_score, 
+      aver_capacity, aver_capacity_score, defect_rate, 
+      defect_rate_score, pass_rate, pass_rate_score, 
+      onepass_rate, onepass_rate_score, rework_rate, 
+      rework_rate_score)
+    values (#{id,jdbcType=INTEGER}, #{output,jdbcType=DOUBLE}, #{outputScore,jdbcType=INTEGER}, 
+      #{averCapacity,jdbcType=DOUBLE}, #{averCapacityScore,jdbcType=INTEGER}, #{defectRate,jdbcType=DOUBLE}, 
+      #{defectRateScore,jdbcType=INTEGER}, #{passRate,jdbcType=DOUBLE}, #{passRateScore,jdbcType=INTEGER}, 
+      #{onepassRate,jdbcType=DOUBLE}, #{onepassRateScore,jdbcType=INTEGER}, #{reworkRate,jdbcType=DOUBLE}, 
+      #{reworkRateScore,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.PerformanceIndex">
+    <!--@mbg.generated-->
+    insert into performance_index
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="output != null">
+        `output`,
+      </if>
+      <if test="outputScore != null">
+        output_score,
+      </if>
+      <if test="averCapacity != null">
+        aver_capacity,
+      </if>
+      <if test="averCapacityScore != null">
+        aver_capacity_score,
+      </if>
+      <if test="defectRate != null">
+        defect_rate,
+      </if>
+      <if test="defectRateScore != null">
+        defect_rate_score,
+      </if>
+      <if test="passRate != null">
+        pass_rate,
+      </if>
+      <if test="passRateScore != null">
+        pass_rate_score,
+      </if>
+      <if test="onepassRate != null">
+        onepass_rate,
+      </if>
+      <if test="onepassRateScore != null">
+        onepass_rate_score,
+      </if>
+      <if test="reworkRate != null">
+        rework_rate,
+      </if>
+      <if test="reworkRateScore != null">
+        rework_rate_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="output != null">
+        #{output,jdbcType=DOUBLE},
+      </if>
+      <if test="outputScore != null">
+        #{outputScore,jdbcType=INTEGER},
+      </if>
+      <if test="averCapacity != null">
+        #{averCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="averCapacityScore != null">
+        #{averCapacityScore,jdbcType=INTEGER},
+      </if>
+      <if test="defectRate != null">
+        #{defectRate,jdbcType=DOUBLE},
+      </if>
+      <if test="defectRateScore != null">
+        #{defectRateScore,jdbcType=INTEGER},
+      </if>
+      <if test="passRate != null">
+        #{passRate,jdbcType=DOUBLE},
+      </if>
+      <if test="passRateScore != null">
+        #{passRateScore,jdbcType=INTEGER},
+      </if>
+      <if test="onepassRate != null">
+        #{onepassRate,jdbcType=DOUBLE},
+      </if>
+      <if test="onepassRateScore != null">
+        #{onepassRateScore,jdbcType=INTEGER},
+      </if>
+      <if test="reworkRate != null">
+        #{reworkRate,jdbcType=DOUBLE},
+      </if>
+      <if test="reworkRateScore != null">
+        #{reworkRateScore,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.PerformanceIndex">
+    <!--@mbg.generated-->
+    update performance_index
+    <set>
+      <if test="output != null">
+        `output` = #{output,jdbcType=DOUBLE},
+      </if>
+      <if test="outputScore != null">
+        output_score = #{outputScore,jdbcType=INTEGER},
+      </if>
+      <if test="averCapacity != null">
+        aver_capacity = #{averCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="averCapacityScore != null">
+        aver_capacity_score = #{averCapacityScore,jdbcType=INTEGER},
+      </if>
+      <if test="defectRate != null">
+        defect_rate = #{defectRate,jdbcType=DOUBLE},
+      </if>
+      <if test="defectRateScore != null">
+        defect_rate_score = #{defectRateScore,jdbcType=INTEGER},
+      </if>
+      <if test="passRate != null">
+        pass_rate = #{passRate,jdbcType=DOUBLE},
+      </if>
+      <if test="passRateScore != null">
+        pass_rate_score = #{passRateScore,jdbcType=INTEGER},
+      </if>
+      <if test="onepassRate != null">
+        onepass_rate = #{onepassRate,jdbcType=DOUBLE},
+      </if>
+      <if test="onepassRateScore != null">
+        onepass_rate_score = #{onepassRateScore,jdbcType=INTEGER},
+      </if>
+      <if test="reworkRate != null">
+        rework_rate = #{reworkRate,jdbcType=DOUBLE},
+      </if>
+      <if test="reworkRateScore != null">
+        rework_rate_score = #{reworkRateScore,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.PerformanceIndex">
+    <!--@mbg.generated-->
+    update performance_index
+    set `output` = #{output,jdbcType=DOUBLE},
+      output_score = #{outputScore,jdbcType=INTEGER},
+      aver_capacity = #{averCapacity,jdbcType=DOUBLE},
+      aver_capacity_score = #{averCapacityScore,jdbcType=INTEGER},
+      defect_rate = #{defectRate,jdbcType=DOUBLE},
+      defect_rate_score = #{defectRateScore,jdbcType=INTEGER},
+      pass_rate = #{passRate,jdbcType=DOUBLE},
+      pass_rate_score = #{passRateScore,jdbcType=INTEGER},
+      onepass_rate = #{onepassRate,jdbcType=DOUBLE},
+      onepass_rate_score = #{onepassRateScore,jdbcType=INTEGER},
+      rework_rate = #{reworkRate,jdbcType=DOUBLE},
+      rework_rate_score = #{reworkRateScore,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

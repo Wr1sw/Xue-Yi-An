@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.cuit.xueyian.dao.RPMapper" >
+    <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.RP" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="result" property="result" jdbcType="INTEGER" />
+        <result column="ecType" property="ecType" javaType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, detail, result, ecType
+  </sql>
+    <select id="queryBonusOrFineByEmpId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select RP.* from employeeec ec, RP where ec.rid = RP.id and ec.eid = #{id}
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from RP
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from RP
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="org.cuit.xueyian.model.RP" >
+    insert into RP (id, detail, result, ecType)
+    values (#{id,jdbcType=INTEGER}, #{detail,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER},#{ecType,javaType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="org.cuit.xueyian.model.RP" >
+        insert into RP
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="detail != null" >
+                detail,
+            </if>
+            <if test="result != null" >
+                result,
+            </if>
+            <if test="ecType != null" >
+                ecType,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="detail != null" >
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null" >
+                #{result,jdbcType=INTEGER},
+            </if>
+            <if test="ecType != null" >
+                #{ecType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.RP" >
+        update RP
+        <set >
+            <if test="detail != null" >
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null" >
+                result = #{result,jdbcType=INTEGER},
+            </if>
+            <if test="ecType != null">
+                ecType = #{ecType,javaType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.RP" >
+    update RP
+    set detail = #{detail,jdbcType=VARCHAR},
+      result = #{result,jdbcType=INTEGER},
+      ecType = #{ecType,javaType=INTEGER},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="getAllRP" resultMap="BaseResultMap">
+    select * from RP
+  </select>
+    <delete id="deleteRPByIds">
+        delete from RP where id in
+        <foreach collection="ids" item="id" close=")" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getRPByEcType" resultMap="BaseResultMap">
+        select * from RP
+        <where>
+            <if test="ecTypeStr != null and ecTypeStr !='' ">
+                 ecType = #{ecTypeStr}
+            </if>
+        </where>
+
+    </select>
+</mapper>

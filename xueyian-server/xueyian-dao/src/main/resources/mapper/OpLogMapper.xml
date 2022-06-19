@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.cuit.xueyian.dao.OpLogMapper" >
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.OpLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="addDate" property="adddate" jdbcType="TIMESTAMP" />
+    <result column="operate" property="operate" jdbcType="VARCHAR" />
+    <result column="hrid" property="hrid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, addDate, operate, hrid, username, result, model
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oplog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oplog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.OpLog" >
+    insert into oplog (id, addDate, operate, 
+      hrid, username, result, model)
+    values (#{id,jdbcType=INTEGER}, #{adddate,jdbcType=DATE}, #{operate,jdbcType=VARCHAR}, 
+      #{hrid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}), #{result,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.OpLog" >
+    insert into oplog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adddate != null" >
+        addDate,
+      </if>
+      <if test="operate != null" >
+        operate,
+      </if>
+      <if test="hrid != null" >
+        hrid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="adddate != null" >
+        #{adddate,jdbcType=DATE},
+      </if>
+      <if test="operate != null" >
+        #{operate,jdbcType=VARCHAR},
+      </if>
+      <if test="hrid != null" >
+        #{hrid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.OpLog" >
+    update oplog
+    <set >
+      <if test="adddate != null" >
+        addDate = #{adddate,jdbcType=DATE},
+      </if>
+      <if test="operate != null" >
+        operate = #{operate,jdbcType=VARCHAR},
+      </if>
+      <if test="hrid != null" >
+        hrid = #{hrid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.OpLog" >
+    update oplog
+    set addDate = #{adddate,jdbcType=DATE},
+      operate = #{operate,jdbcType=VARCHAR},
+      hrid = #{hrid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllOplog" resultMap="BaseResultMap">
+    select * from oplog;
+  </select>
+
+  <delete id="deleteOplogByIds">
+    delete from oplog where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

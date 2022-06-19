@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.KpiScoreMapper">
+  <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.KpiScore">
+    <!--@mbg.generated-->
+    <!--@Table kpi_score-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="kpi" jdbcType="VARCHAR" property="kpi" />
+    <result column="max_score" jdbcType="DOUBLE" property="maxScore" />
+    <result column="min_score" jdbcType="DOUBLE" property="minScore" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, kpi, max_score, min_score
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from kpi_score
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from kpi_score
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cuit.xueyian.model.KpiScore">
+    <!--@mbg.generated-->
+    insert into kpi_score (id, kpi, max_score, 
+      min_score)
+    values (#{id,jdbcType=INTEGER}, #{kpi,jdbcType=VARCHAR}, #{maxScore,jdbcType=DOUBLE}, 
+      #{minScore,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cuit.xueyian.model.KpiScore">
+    <!--@mbg.generated-->
+    insert into kpi_score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="kpi != null">
+        kpi,
+      </if>
+      <if test="maxScore != null">
+        max_score,
+      </if>
+      <if test="minScore != null">
+        min_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="kpi != null">
+        #{kpi,jdbcType=VARCHAR},
+      </if>
+      <if test="maxScore != null">
+        #{maxScore,jdbcType=DOUBLE},
+      </if>
+      <if test="minScore != null">
+        #{minScore,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cuit.xueyian.model.KpiScore">
+    <!--@mbg.generated-->
+    update kpi_score
+    <set>
+      <if test="kpi != null">
+        kpi = #{kpi,jdbcType=VARCHAR},
+      </if>
+      <if test="maxScore != null">
+        max_score = #{maxScore,jdbcType=DOUBLE},
+      </if>
+      <if test="minScore != null">
+        min_score = #{minScore,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cuit.xueyian.model.KpiScore">
+    <!--@mbg.generated-->
+    update kpi_score
+    set kpi = #{kpi,jdbcType=VARCHAR},
+      max_score = #{maxScore,jdbcType=DOUBLE},
+      min_score = #{minScore,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteKpiScoreByIds">
+    delete from Kpi_score where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+  <select id="getAllKpiScore" resultMap="BaseResultMap">
+    select * from kpi_score;
+  </select>
+</mapper>

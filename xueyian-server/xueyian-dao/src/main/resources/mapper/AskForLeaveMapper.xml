@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.AskForLeaveMapper">
+
+    <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.AskForLeave">
+        <!--@Table ask_for_leave-->
+        <result property="leaveId" column="leave_id" jdbcType="INTEGER"/>
+        <result property="leaveWorkerName" column="leave_worker_name" jdbcType="VARCHAR"/>
+        <result property="leaveWorkerPhone" column="leave_worker_phone" jdbcType="VARCHAR"/>
+        <result property="leaveWorkerId" column="leave_worker_id" jdbcType="VARCHAR"/>
+        <result property="leaveWorkerDepartId" column="leave_worker_depart_id" jdbcType="INTEGER"/>
+        <result property="leaveStartTime" column="leave_start_time" jdbcType="OTHER"/>
+        <result property="leaveEndTime" column="leave_end_time" jdbcType="OTHER"/>
+        <result property="leaveType" column="leave_type" jdbcType="VARCHAR"/>
+        <result property="leaveReason" column="leave_reason" jdbcType="VARCHAR"/>
+        <result property="leaveIsHrAgree" column="leave_is_hr_agree" jdbcType="INTEGER"/>
+        <result property="leaveIsBossAgree" column="leave_is_boss_agree" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          leave_id, leave_worker_name, leave_worker_phone, leave_worker_id, leave_worker_depart_id, leave_start_time, leave_end_time, leave_type, leave_reason, leave_is_hr_agree, leave_is_boss_agree
+        from xueyian.ask_for_leave
+        where leave_id = #{leaveId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          leave_id, leave_worker_name, leave_worker_phone, leave_worker_id, leave_worker_depart_id, leave_start_time, leave_end_time, leave_type, leave_reason, leave_is_hr_agree, leave_is_boss_agree
+        from xueyian.ask_for_leave
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          leave_id, leave_worker_name, leave_worker_phone, leave_worker_id, leave_worker_depart_id, leave_start_time, leave_end_time, leave_type, leave_reason, leave_is_hr_agree, leave_is_boss_agree
+        from xueyian.ask_for_leave
+        <where>
+            <if test="leaveId != null">
+                and leave_id = #{leaveId}
+            </if>
+            <if test="leaveWorkerName != null and leaveWorkerName != ''">
+                and leave_worker_name = #{leaveWorkerName}
+            </if>
+            <if test="leaveWorkerPhone != null and leaveWorkerPhone != ''">
+                and leave_worker_phone = #{leaveWorkerPhone}
+            </if>
+            <if test="leaveWorkerId != null and leaveWorkerId != ''">
+                and leave_worker_id = #{leaveWorkerId}
+            </if>
+            <if test="leaveWorkerDepartId != null">
+                and leave_worker_depart_id = #{leaveWorkerDepartId}
+            </if>
+            <if test="leaveStartTime != null">
+                and leave_start_time = #{leaveStartTime}
+            </if>
+            <if test="leaveEndTime != null">
+                and leave_end_time = #{leaveEndTime}
+            </if>
+            <if test="leaveType != null and leaveType != ''">
+                and leave_type = #{leaveType}
+            </if>
+            <if test="leaveReason != null and leaveReason != ''">
+                and leave_reason = #{leaveReason}
+            </if>
+            <if test="leaveIsHrAgree != null">
+                and leave_is_hr_agree = #{leaveIsHrAgree}
+            </if>
+            <if test="leaveIsBossAgree != null">
+                and leave_is_boss_agree = #{leaveIsBossAgree}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="leaveId" useGeneratedKeys="true">
+        insert into xueyian.ask_for_leave(leave_worker_name, leave_worker_phone, leave_worker_id, leave_worker_depart_id, leave_start_time, leave_end_time, leave_type, leave_reason, leave_is_hr_agree, leave_is_boss_agree)
+        values (#{leaveWorkerName}, #{leaveWorkerPhone}, #{leaveWorkerId}, #{leaveWorkerDepartId}, #{leaveStartTime}, #{leaveEndTime}, #{leaveType}, #{leaveReason}, #{leaveIsHrAgree}, #{leaveIsBossAgree})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update xueyian.ask_for_leave
+        <set>
+            <if test="leaveWorkerName != null and leaveWorkerName != ''">
+                leave_worker_name = #{leaveWorkerName},
+            </if>
+            <if test="leaveWorkerPhone != null and leaveWorkerPhone != ''">
+                leave_worker_phone = #{leaveWorkerPhone},
+            </if>
+            <if test="leaveWorkerId != null and leaveWorkerId != ''">
+                leave_worker_id = #{leaveWorkerId},
+            </if>
+            <if test="leaveWorkerDepartId != null">
+                leave_worker_depart_id = #{leaveWorkerDepartId},
+            </if>
+            <if test="leaveStartTime != null">
+                leave_start_time = #{leaveStartTime},
+            </if>
+            <if test="leaveEndTime != null">
+                leave_end_time = #{leaveEndTime},
+            </if>
+            <if test="leaveType != null and leaveType != ''">
+                leave_type = #{leaveType},
+            </if>
+            <if test="leaveReason != null and leaveReason != ''">
+                leave_reason = #{leaveReason},
+            </if>
+            <if test="leaveIsHrAgree != null">
+                leave_is_hr_agree = #{leaveIsHrAgree},
+            </if>
+            <if test="leaveIsBossAgree != null">
+                leave_is_boss_agree = #{leaveIsBossAgree},
+            </if>
+        </set>
+        where leave_id = #{leaveId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from xueyian.ask_for_leave where leave_id = #{leaveId}
+    </delete>
+
+
+</mapper>

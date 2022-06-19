@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuit.xueyian.dao.NeglectWorkMapper">
+
+    <resultMap id="BaseResultMap" type="org.cuit.xueyian.model.NeglectWork">
+        <!--@Table neglect_work-->
+        <result property="neglectId" column="neglect_id" jdbcType="INTEGER"/>
+        <result property="neglectWorkerName" column="neglect_worker_name" jdbcType="VARCHAR"/>
+        <result property="neglectWorkerId" column="neglect_worker_id" jdbcType="VARCHAR"/>
+        <result property="leaveWorkerDepartId" column="leave_worker_depart_id" jdbcType="INTEGER"/>
+        <result property="neglectDate" column="neglect_date" jdbcType="OTHER"/>
+        <result property="neglectRemarks" column="neglect_remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          neglect_id, neglect_worker_name, neglect_worker_id, leave_worker_depart_id, neglect_date, neglect_remarks
+        from xueyian.neglect_work
+        where neglect_id = #{neglectId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          neglect_id, neglect_worker_name, neglect_worker_id, leave_worker_depart_id, neglect_date, neglect_remarks
+        from xueyian.neglect_work
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          neglect_id, neglect_worker_name, neglect_worker_id, leave_worker_depart_id, neglect_date, neglect_remarks
+        from xueyian.neglect_work
+        <where>
+            <if test="neglectId != null">
+                and neglect_id = #{neglectId}
+            </if>
+            <if test="neglectWorkerName != null and neglectWorkerName != ''">
+                and neglect_worker_name = #{neglectWorkerName}
+            </if>
+            <if test="neglectWorkerId != null and neglectWorkerId != ''">
+                and neglect_worker_id = #{neglectWorkerId}
+            </if>
+            <if test="leaveWorkerDepartId != null">
+                and leave_worker_depart_id = #{leaveWorkerDepartId}
+            </if>
+            <if test="neglectDate != null">
+                and neglect_date = #{neglectDate}
+            </if>
+            <if test="neglectRemarks != null and neglectRemarks != ''">
+                and neglect_remarks = #{neglectRemarks}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="neglectId" useGeneratedKeys="true">
+        insert into xueyian.neglect_work(neglect_worker_name, neglect_worker_id, leave_worker_depart_id, neglect_date, neglect_remarks)
+        values (#{neglectWorkerName}, #{neglectWorkerId}, #{leaveWorkerDepartId}, #{neglectDate}, #{neglectRemarks})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update xueyian.neglect_work
+        <set>
+            <if test="neglectWorkerName != null and neglectWorkerName != ''">
+                neglect_worker_name = #{neglectWorkerName},
+            </if>
+            <if test="neglectWorkerId != null and neglectWorkerId != ''">
+                neglect_worker_id = #{neglectWorkerId},
+            </if>
+            <if test="leaveWorkerDepartId != null">
+                leave_worker_depart_id = #{leaveWorkerDepartId},
+            </if>
+            <if test="neglectDate != null">
+                neglect_date = #{neglectDate},
+            </if>
+            <if test="neglectRemarks != null and neglectRemarks != ''">
+                neglect_remarks = #{neglectRemarks},
+            </if>
+        </set>
+        where neglect_id = #{neglectId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from xueyian.neglect_work where neglect_id = #{neglectId}
+    </delete>
+
+</mapper>
