@@ -1,8 +1,6 @@
 
 # Xue-Yi-An
 
-此项目是CUIT2019级软件工程学院工程实践4项目成果。
-
 <!-- PROJECT SHIELDS -->
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -29,7 +27,10 @@
 
 </p>
 
- 
+## 友情提示
+1. 此项目是CUIT2019级软件工程学院工程实践4项目成果。
+2. 这是一款前后端分离的人事管理系统。项目加入常见的企业级应用所涉及到的技术点，例如 Redis、RabbitMQ 等。使用SpringSecurity 实现了多种登录方式:用户名登录、邮箱验证码登录、手机验证码登录。拥有视频在线播放、视频上传等功能。使用WebSocket实现了在线聊天室。
+3. 前台项目：https://github.com/wr1sw/xueyanhr
 ## 目录
 
 - [上手指南](#上手指南)
@@ -195,8 +196,7 @@ eg:
 | MySQL              | MySQL数据库         | https://www.mysql.com/                        |
 | Druid                | 数据库连接池        | https://github.com/alibaba/druid               |
 | Hutool               | Java工具类库        | https://github.com/looly/hutool                |
- ###作者
- *在贡献者名单中参看所有参与该项目的开发者*
+
 ### 鸣谢
 - [lenve/vhr](https://github.com/lenve/vhr)
 
